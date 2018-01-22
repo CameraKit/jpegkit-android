@@ -1,0 +1,51 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionName rootProject.ext.versionName
+    }
+    lintOptions {
+        abortOnError false
+    }
+    externalNativeBuild {
+        cmake {
+            path 'src/main/CMakeLists.txt'
+        }
+    }
+}
+
+
+group = 'com.camerakit'
+version = rootProject.ext.versionName
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            name 'jpegkit-android'
+            packaging 'aar'
+        }
+    }
+}
+
+bintray {
+    user = rootProject.ext.bintrayUser
+    key = rootProject.ext.bintrayKey
+    override = true
+    publish = true
+    configurations = ['archives']
+    pkg {
+        repo = 'jpegkit-android'
+        name = 'jpegkit-android'
+        userOrg = 'camerakit'
+        vcsUrl = 'https://github.com/camerakit/jpegkit-android.git'
+        version {
+            name = rootProject.ext.versionName
+            vcsTag = rootProject.ext.versionName
+            released = new Date()
+        }
+    }
+}
