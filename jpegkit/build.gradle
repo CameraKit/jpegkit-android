@@ -53,13 +53,11 @@ task buildDeployment {
     shouldRunAfter(cleanDeployment)
     finalizedBy assemble
 
-    doLast {
-        android.ndkDirectory
-    }
-
-    android.variantFilter { variant ->
-        if (variant.buildType.name == 'debug') {
-            variant.setIgnore(true)
+    doFirst {
+        android.variantFilter { variant ->
+            if (variant.buildType.name == 'debug') {
+                variant.setIgnore(true)
+            }
         }
     }
 }
