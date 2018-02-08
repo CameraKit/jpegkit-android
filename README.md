@@ -15,10 +15,6 @@
 
 <p align="center">
     <a href="https://join-slack.camerakit.website"><img src="https://join-slack.camerakit.website/badge.svg" alt="Build Status"></a>
-    <a href="https://circleci.com/gh/CameraKit/jpegkit-android/tree/master"><img src="https://circleci.com/gh/CameraKit/jpegkit-android/tree/master.svg?style=shield" alt="CircleCI"></a>
-    <a href="https://codeclimate.com/github/CameraKit/camerakit-android"><img src="https://codeclimate.com/github/CameraKit/camerakit-android/badges/gpa.svg" alt="Code Climate"></a>
-    <a href="https://codeclimate.com/github/CameraKit/camerakit-android"><img src="https://codeclimate.com/github/CameraKit/camerakit-android/badges/coverage.svg" alt="Code Climate"></a>
-    <a href="https://codeclimate.com/github/CameraKit/camerakit-android"><img src="https://codeclimate.com/github/CameraKit/camerakit-android/badges/issue_count.svg" alt="Code Climate"></a>
 </p>
 
 JpegKit bridges the libjpeg-turbo C++ library into android and wraps it with an easy to use class. You can currently:
