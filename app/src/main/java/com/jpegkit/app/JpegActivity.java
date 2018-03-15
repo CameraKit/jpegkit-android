@@ -1,4 +1,4 @@
-package com.camerakit.jpegkit.app;
+package com.jpegkit.app;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -23,7 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.camerakit.jpegkit.JpegTransformer;
+import com.jpegkit.JpegTransformer;
 
 public class JpegActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.camerakit.jpegkit;
+package com.jpegkit;
 
 import android.graphics.Rect;
 

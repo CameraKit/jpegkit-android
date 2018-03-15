@@ -1,4 +1,4 @@
-package com.camerakit.jpegkit.app;
+package com.jpegkit.app;
 
 import android.Manifest;
 import android.content.Intent;
@@ -23,7 +23,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.camerakit.jpegkit.JpegTransformer;
+import com.jpegkit.JpegTransformer;
 
 import java.io.File;
 import java.io.FileInputStream;

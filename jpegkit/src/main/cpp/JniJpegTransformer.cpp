@@ -7,39 +7,39 @@
 extern "C"
 {
 JNIEXPORT jobject JNICALL
-Java_com_camerakit_jpegkit_JpegTransformer_jniStoreJpeg
+Java_com_jpegkit_JpegTransformer_jniStoreJpeg
         (JNIEnv *env, jobject obj, jbyteArray jpeg, jint jpegSize);
 
 JNIEXPORT jbyteArray JNICALL
-Java_com_camerakit_jpegkit_JpegTransformer_jniCommit
+Java_com_jpegkit_JpegTransformer_jniCommit
         (JNIEnv *env, jobject obj, jobject handle);
 
 JNIEXPORT void JNICALL
-Java_com_camerakit_jpegkit_JpegTransformer_jniReleaseJpeg
+Java_com_jpegkit_JpegTransformer_jniReleaseJpeg
         (JNIEnv *env, jobject obj, jobject handle);
 
 JNIEXPORT jint JNICALL
-Java_com_camerakit_jpegkit_JpegTransformer_jniGetWidth
+Java_com_jpegkit_JpegTransformer_jniGetWidth
         (JNIEnv *env, jobject obj, jobject handle);
 
 JNIEXPORT jint JNICALL
-Java_com_camerakit_jpegkit_JpegTransformer_jniGetHeight
+Java_com_jpegkit_JpegTransformer_jniGetHeight
         (JNIEnv *env, jobject obj, jobject handle);
 
 JNIEXPORT void JNICALL
-Java_com_camerakit_jpegkit_JpegTransformer_jniRotate
+Java_com_jpegkit_JpegTransformer_jniRotate
         (JNIEnv *env, jobject obj, jobject handle, jint degrees);
 
 JNIEXPORT void JNICALL
-Java_com_camerakit_jpegkit_JpegTransformer_jniFlipHorizontal
+Java_com_jpegkit_JpegTransformer_jniFlipHorizontal
         (JNIEnv *env, jobject obj, jobject handle);
 
 JNIEXPORT void JNICALL
-Java_com_camerakit_jpegkit_JpegTransformer_jniFlipVertical
+Java_com_jpegkit_JpegTransformer_jniFlipVertical
         (JNIEnv *env, jobject obj, jobject handle);
 
 JNIEXPORT void JNICALL
-Java_com_camerakit_jpegkit_JpegTransformer_jniCrop
+Java_com_jpegkit_JpegTransformer_jniCrop
         (JNIEnv *env, jobject obj, jobject handle, jint left, jint top, jint right, jint bottom);
 }
 
@@ -65,7 +65,7 @@ public:
 };
 
 JNIEXPORT jobject JNICALL
-Java_com_camerakit_jpegkit_JpegTransformer_jniStoreJpeg
+Java_com_jpegkit_JpegTransformer_jniStoreJpeg
         (JNIEnv *env, jobject obj, jbyteArray jpeg, jint jpegSize) {
     tjhandle tjHandle = tjInitDecompress();
     jbyte *jpegBuffer = env->GetByteArrayElements(jpeg, 0);
@@ -101,7 +101,7 @@ Java_com_camerakit_jpegkit_JpegTransformer_jniStoreJpeg
 }
 
 JNIEXPORT jbyteArray JNICALL
-Java_com_camerakit_jpegkit_JpegTransformer_jniCommit
+Java_com_jpegkit_JpegTransformer_jniCommit
         (JNIEnv *env, jobject obj, jobject handle) {
     JpegTransformer *jpegTransformer = (JpegTransformer *) env->GetDirectBufferAddress(handle);
     tjhandle tjHandle = jpegTransformer->transformHandle;
@@ -113,21 +113,21 @@ Java_com_camerakit_jpegkit_JpegTransformer_jniCommit
 }
 
 JNIEXPORT jint JNICALL
-Java_com_camerakit_jpegkit_JpegTransformer_jniGetWidth
+Java_com_jpegkit_JpegTransformer_jniGetWidth
         (JNIEnv *env, jobject obj, jobject handle) {
     JpegTransformer *jpegTransformer = (JpegTransformer *) env->GetDirectBufferAddress(handle);
     return jpegTransformer->width;
 }
 
 JNIEXPORT jint JNICALL
-Java_com_camerakit_jpegkit_JpegTransformer_jniGetHeight
+Java_com_jpegkit_JpegTransformer_jniGetHeight
         (JNIEnv *env, jobject obj, jobject handle) {
     JpegTransformer *jpegTransformer = (JpegTransformer *) env->GetDirectBufferAddress(handle);
     return jpegTransformer->height;
 }
 
 JNIEXPORT void JNICALL
-Java_com_camerakit_jpegkit_JpegTransformer_jniRotate
+Java_com_jpegkit_JpegTransformer_jniRotate
         (JNIEnv *env, jobject obj, jobject handle, jint degrees) {
     JpegTransformer *jpegTransformer = (JpegTransformer *) env->GetDirectBufferAddress(handle);
     tjhandle tjHandle = jpegTransformer->transformHandle;
@@ -145,7 +145,7 @@ Java_com_camerakit_jpegkit_JpegTransformer_jniRotate
 }
 
 JNIEXPORT void JNICALL
-Java_com_camerakit_jpegkit_JpegTransformer_jniFlipHorizontal
+Java_com_jpegkit_JpegTransformer_jniFlipHorizontal
         (JNIEnv *env, jobject obj, jobject handle) {
     JpegTransformer *jpegTransformer = (JpegTransformer *) env->GetDirectBufferAddress(handle);
     tjhandle tjHandle = jpegTransformer->transformHandle;
@@ -157,7 +157,7 @@ Java_com_camerakit_jpegkit_JpegTransformer_jniFlipHorizontal
 }
 
 JNIEXPORT void JNICALL
-Java_com_camerakit_jpegkit_JpegTransformer_jniFlipVertical
+Java_com_jpegkit_JpegTransformer_jniFlipVertical
         (JNIEnv *env, jobject obj, jobject handle) {
     JpegTransformer *jpegTransformer = (JpegTransformer *) env->GetDirectBufferAddress(handle);
     tjhandle tjHandle = jpegTransformer->transformHandle;
@@ -169,7 +169,7 @@ Java_com_camerakit_jpegkit_JpegTransformer_jniFlipVertical
 }
 
 JNIEXPORT void JNICALL
-Java_com_camerakit_jpegkit_JpegTransformer_jniCrop
+Java_com_jpegkit_JpegTransformer_jniCrop
         (JNIEnv *env, jobject obj, jobject handle, jint left, jint top, jint width, jint height) {
     JpegTransformer *jpegTransformer = (JpegTransformer *) env->GetDirectBufferAddress(handle);
     tjhandle tjHandle = jpegTransformer->transformHandle;
