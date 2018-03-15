@@ -3,6 +3,7 @@ package com.jpegkit.app;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -24,6 +25,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jpegkit.JpegTransformer;
+
+import java.util.Set;
+import java.util.TreeSet;
 
 public class JpegActivity extends AppCompatActivity {
 
@@ -111,6 +115,31 @@ public class JpegActivity extends AppCompatActivity {
             data.putExtra("jpeg", mJpeg);
             setResult(RESULT_OK, data);
             finish();
+            return true;
+        }
+
+        if (item.getItemId() == R.id.action_delete) {
+            SharedPreferences sharedPreferences = getSharedPreferences("jpegkit", MODE_PRIVATE);
+            Set<String> jpegSet = sharedPreferences.getStringSet("jpegs", new TreeSet<String>());
+
+            TreeSet<String> newJpegSet = new TreeSet<>();
+            for (String jpegPath : jpegSet) {
+                if (!jpegPath.contains(mName)) {
+                    newJpegSet.add(jpegPath);
+                }
+            }
+
+            sharedPreferences
+                    .edit()
+                    .putStringSet("jpegs", newJpegSet)
+                    .apply();
+
+            finish();
+            return true;
+        }
+
+        if (item.getItemId() == R.id.action_metadata) {
+
             return true;
         }
 

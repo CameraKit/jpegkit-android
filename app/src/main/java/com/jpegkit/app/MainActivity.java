@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -52,6 +53,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("JpegKit App");
+        }
 
         mSharedPreferences = getSharedPreferences("jpegkit", MODE_PRIVATE);
 
@@ -132,6 +137,15 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
+        if (item.getItemId() == R.id.action_info) {
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle(R.string.about_dialog_title)
+                    .setMessage(R.string.about_dialog_message)
+                    .setNeutralButton("Dismiss", null)
+                    .show();
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -206,7 +220,6 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-            TreeSet<String> newJpegSet = new TreeSet<>();
             for (String jpegPath : jpegSet) {
                 if (jpegPath.contains(name)) {
                     try {
@@ -222,16 +235,12 @@ public class MainActivity extends AppCompatActivity {
                     } catch (Exception e) {
                     }
                 }
-
-                newJpegSet.add(jpegPath);
             }
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mAdapter.refresh();
-                }
-            }, 500);
+            mAdapter.refresh();
+            return;
+        } else if (requestCode == JPEG_INTENT) {
+            mAdapter.refresh();
             return;
         }
 

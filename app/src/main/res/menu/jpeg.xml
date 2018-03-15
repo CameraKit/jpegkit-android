@@ -10,4 +10,14 @@
         android:title="Save"
         app:showAsAction="always|withText" />
 
+    <item
+        android:id="@+id/action_delete"
+        android:title="Delete"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_metadata"
+        android:title="Metadata"
+        app:showAsAction="never" />
+
 </menu>

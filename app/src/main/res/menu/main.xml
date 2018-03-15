@@ -5,7 +5,13 @@
     <item
         android:id="@+id/action_upload"
         android:icon="@drawable/ic_upload"
-        android:title="Choose Image"
+        android:title="New"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_info"
+        android:icon="@drawable/ic_info"
+        android:title=""
         app:showAsAction="always" />
 
 </menu>

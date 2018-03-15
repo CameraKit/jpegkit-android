@@ -19,7 +19,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".JpegActivity" />
+        <activity
+            android:name=".JpegActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 
