@@ -110,9 +110,14 @@ public class JpegActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_save) {
+            try {
+                mJpeg.save();
+            } catch (Exception e) {
+                Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+            }
+
             Intent data = new Intent();
             data.putExtra("name", mName);
-            data.putExtra("jpeg", mJpegBytes);
             setResult(RESULT_OK, data);
             finish();
             return true;
@@ -139,7 +144,6 @@ public class JpegActivity extends AppCompatActivity {
         }
 
         if (item.getItemId() == R.id.action_metadata) {
-
             return true;
         }
 

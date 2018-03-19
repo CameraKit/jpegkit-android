@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -22,6 +21,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jpegkit.Jpeg;
 import com.jpegkit.JpegFile;
@@ -213,28 +213,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (requestCode == JPEG_INTENT && resultCode == RESULT_OK) {
-            Set<String> jpegSet = mSharedPreferences.getStringSet("jpegs", new TreeSet<String>());
-
             String name = data.getStringExtra("name");
-            byte[] jpeg = data.getByteArrayExtra("jpeg");
 
-            if (name == null || jpeg == null) {
-                return;
-            }
-
-            for (String jpegPath : jpegSet) {
-                if (jpegPath.contains(name)) {
-                    try {
-                        File album = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "jpegkit");
-                        if (!album.mkdirs() && !album.exists()) {
-                            return;
+            if (name != null) {
+                for (int i = 0; i < mAdapter.getCount(); i++) {
+                    JpegItem item = mAdapter.getItem(i);
+                    if (item.mJpeg.getFile().getAbsolutePath().contains(name)) {
+                        try {
+                            item.mJpeg.reload();
+                        } catch (Exception e) {
                         }
-
-                        File imageFile = new File(album, name);
-                        FileOutputStream outputStream = new FileOutputStream(imageFile);
-                        outputStream.write(jpeg);
-                        outputStream.close();
-                    } catch (Exception e) {
                     }
                 }
             }
@@ -299,24 +287,41 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public void refresh() {
-            if (mData != null) {
-                for (JpegItem jpegItem : mData) {
-                    if (jpegItem.mJpeg != null) {
-                        jpegItem.mJpeg.release();
-                    }
-                }
-            }
+            List<JpegItem> oldData = mData;
 
             mData = new ArrayList<>();
 
             SharedPreferences sharedPreferences = getSharedPreferences("jpegkit", MODE_PRIVATE);
             Set<String> jpegSet = sharedPreferences.getStringSet("jpegs", new TreeSet<String>());
             for (String jpegPath : jpegSet) {
-                try {
-                    File file = new File(jpegPath);
-                    mData.add(new JpegItem(file));
-                } catch (Exception e) {
+                boolean added = false;
+
+                if (oldData != null) {
+                    for (JpegItem oldItem : oldData) {
+                        if (!added && oldItem.mFile.getAbsolutePath().contains(jpegPath)) {
+                            mData.add(oldItem);
+                            added = true;
+                        }
+                    }
                 }
+
+                if (!added) {
+                    try {
+                        File file = new File(jpegPath);
+                        mData.add(new JpegItem(file));
+                    } catch (Exception e) {
+                    }
+                }
+            }
+
+            if (oldData != null) {
+                for (JpegItem oldItem : oldData) {
+                    if (!mData.contains(oldItem) && oldItem.mJpeg != null) {
+                        oldItem.mJpeg.release();
+                    }
+                }
+
+                oldData.clear();
             }
 
             notifyDataSetChanged();
