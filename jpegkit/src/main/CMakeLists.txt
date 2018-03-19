@@ -8,6 +8,6 @@ include_directories(${JPEG_INC_DIR})
 add_library(libjpeg STATIC IMPORTED)
 set_target_properties(libjpeg PROPERTIES IMPORTED_LOCATION ${JPEG_BUILD_DIR}/${ANDROID_ABI}/libjpeg-turbo.a)
 
-add_library(jpegTransformer SHARED ${CMAKE_SOURCE_DIR}/cpp/JniJpegTransformer.cpp)
+add_library(jpegkit SHARED ${CMAKE_SOURCE_DIR}/cpp/JniJpeg.cpp)
 
-target_link_libraries(jpegTransformer libjpeg)
+target_link_libraries(jpegkit libjpeg)

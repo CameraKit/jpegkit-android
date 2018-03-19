@@ -50,7 +50,7 @@
  * followed by -rot 180 -trim trims both edges.)
  *
  * We also offer a lossless-crop option, which discards data outside a given
- * image region but losslessly preserves what is inside.  Like the rotate and
+ * image region but losslessly preserves what is inside.  Like the setRotation and
  * flip transforms, lossless crop is restricted by the JPEG format: the upper
  * left corner of the selected region must fall on an iMCU boundary.  If this
  * does not hold for the given crop parameters, we silently move the upper left
@@ -70,7 +70,7 @@
  * We also offer a "force to grayscale" option, which simply discards the
  * chrominance channels of a YCbCr image.  This is lossless in the sense that
  * the luminance channel is preserved exactly.  It's not the same kind of
- * thing as the rotate/flip transformations, but it's convenient to handle it
+ * thing as the setRotation/flip transformations, but it's convenient to handle it
  * as part of this package, mainly because the transformation routines have to
  * be aware of the option to know how many components to work on.
  */
@@ -208,7 +208,7 @@ typedef enum {
 
 #define JCOPYOPT_DEFAULT  JCOPYOPT_COMMENTS	/* recommended default */
 
-/* Setup decompression object to save desired markers in memory */
+/* Setup decompression object to writeFileAsync desired markers in memory */
 EXTERN(void) jcopy_markers_setup
 	JPP((j_decompress_ptr srcinfo, JCOPY_OPTION option));
 /* Copy markers saved in the given source object to the destination object */

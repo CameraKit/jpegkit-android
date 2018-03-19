@@ -19,6 +19,10 @@ android {
     }
 }
 
+dependencies {
+    implementation 'com.android.support:exifinterface:27.1.0'
+}
+
 ext.getBintrayUser = { ->
     if (System.getenv('BINTRAY_USER')) {
         return System.getenv('BINTRAY_USER')

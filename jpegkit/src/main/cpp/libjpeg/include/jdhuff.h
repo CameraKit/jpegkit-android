@@ -113,7 +113,7 @@ typedef struct {		/* Bitreading working state within an MCU */
   j_decompress_ptr cinfo;	/* back link to decompress master record */
 } bitread_working_state;
 
-/* Macros to declare and load/save bitread local variables. */
+/* Macros to declare and load/writeFileAsync bitread local variables. */
 #define BITREAD_STATE_VARS  \
 	register bit_buf_type get_buffer;  \
 	register int bits_left;  \

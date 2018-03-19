@@ -223,7 +223,7 @@ typedef struct {
     int Ah, Al;            /* progressive JPEG successive approx. parms */
 } jpeg_scan_info;
 
-/* The decompressor can save APPn and COM markers in a list of these: */
+/* The decompressor can writeFileAsync APPn and COM markers in a list of these: */
 
 typedef struct jpeg_marker_struct FAR *jpeg_saved_marker_ptr;
 
@@ -823,10 +823,10 @@ typedef struct {
     // remaining EOBs in EOBRUN
     unsigned short EOBRUN;
 
-    // save the decoder current bit buffer, entropy->bitstate.get_buffer.
+    // writeFileAsync the decoder current bit buffer, entropy->bitstate.get_buffer.
     INT32 get_buffer;
 
-    // save the restart info.
+    // writeFileAsync the restart info.
     unsigned short restarts_to_go;
     unsigned char next_restart_num;
 } huffman_offset_data;
