@@ -13,7 +13,7 @@ public class JpegFile extends Jpeg {
 
     private File mJpegFile;
 
-    public JpegFile(@NonNull File jpegFile) throws IOException {
+    public JpegFile(@NonNull final File jpegFile) throws IOException {
         super(dumpFile(jpegFile));
         mJpegFile = jpegFile;
     }
@@ -26,6 +26,12 @@ public class JpegFile extends Jpeg {
         FileOutputStream outputStream = new FileOutputStream(mJpegFile);
         outputStream.write(getJpegBytes());
         outputStream.close();
+    }
+
+    public void reload() throws Exception {
+        byte[] jpegBytes = dumpFile(mJpegFile);
+        release();
+        mount(jpegBytes);
     }
 
     private static byte[] dumpFile(File file) throws IOException {

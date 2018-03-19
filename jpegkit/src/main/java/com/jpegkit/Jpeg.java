@@ -17,6 +17,10 @@ public class Jpeg implements Parcelable {
     }
 
     public Jpeg(@NonNull byte[] jpegBytes) {
+        mount(jpegBytes);
+    }
+
+    protected void mount(byte[] jpegBytes) {
         synchronized (sJniLock) {
             mHandle = jniMount(jpegBytes);
         }
