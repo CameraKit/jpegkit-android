@@ -4,7 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -20,14 +20,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.jpegkit.JpegTransformer;
+import com.jpegkit.Jpeg;
+import com.jpegkit.JpegFile;
+import com.jpegkit.JpegImageView;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -69,10 +69,12 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 JpegItem item = mAdapter.getItem(position);
 
-                Intent intent = new Intent(MainActivity.this, JpegActivity.class);
-                intent.putExtra("name", item.getName());
-                intent.putExtra("jpeg", item.getJpeg());
-                startActivityForResult(intent, JPEG_INTENT);
+                if (item.mJpeg != null) {
+                    Intent intent = new Intent(MainActivity.this, JpegActivity.class);
+                    intent.putExtra("name", item.mFile.getName());
+                    intent.putExtra("jpeg", item.mJpeg);
+                    startActivityForResult(intent, JPEG_INTENT);
+                }
             }
         });
 
@@ -267,29 +269,23 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putStringSet("jpegs", newJpegSet);
-        editor.apply();
+        editor.commit();
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.refresh();
-            }
-        }, 500);
+        mAdapter.refresh();
     }
 
-    private abstract class JpegItem {
+    private class JpegItem {
 
-        private String mName;
+        private File mFile;
+        private JpegFile mJpeg;
 
-        public JpegItem(String name) {
-            mName = name;
+        public JpegItem(File file) {
+            mFile = file;
+            try {
+                mJpeg = new JpegFile(file);
+            } catch (final IOException e) {
+            }
         }
-
-        public String getName() {
-            return mName;
-        }
-
-        public abstract byte[] getJpeg();
 
     }
 
@@ -303,29 +299,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public void refresh() {
+            if (mData != null) {
+                for (JpegItem jpegItem : mData) {
+                    if (jpegItem.mJpeg != null) {
+                        jpegItem.mJpeg.release();
+                    }
+                }
+            }
+
             mData = new ArrayList<>();
 
             SharedPreferences sharedPreferences = getSharedPreferences("jpegkit", MODE_PRIVATE);
             Set<String> jpegSet = sharedPreferences.getStringSet("jpegs", new TreeSet<String>());
             for (String jpegPath : jpegSet) {
                 try {
-                    final String jpegFilePath = jpegPath;
-
-                    File file = new File(jpegFilePath);
-                    mData.add(new JpegItem(file.getName()) {
-                        @Override
-                        public byte[] getJpeg() {
-                            try {
-                                FileInputStream inputStream = new FileInputStream(jpegFilePath);
-                                byte[] fileBytes = new byte[inputStream.available()];
-                                inputStream.read(fileBytes);
-                                inputStream.close();
-                                return fileBytes;
-                            } catch (IOException e) {
-                                return null;
-                            }
-                        }
-                    });
+                    File file = new File(jpegPath);
+                    mData.add(new JpegItem(file));
                 } catch (Exception e) {
                 }
             }
@@ -356,21 +345,28 @@ public class MainActivity extends AppCompatActivity {
 
             JpegItem item = getItem(position);
 
-            byte[] bytes = item.getJpeg();
-            JpegTransformer jpegTransformer = new JpegTransformer(item.getJpeg());
+            if (item.mJpeg == null) {
+                convertView.findViewById(R.id.content).setVisibility(View.INVISIBLE);
+                return convertView;
+            }
 
-            ImageView imageView = convertView.findViewById(R.id.imageView);
-            imageView.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
+            convertView.findViewById(R.id.content).setVisibility(View.VISIBLE);
+
+            File file = item.mFile;
+            Jpeg jpeg = item.mJpeg;
+
+            JpegImageView imageView = convertView.findViewById(R.id.imageView);
+            imageView.setJpeg(jpeg);
 
             TextView nameTextView = convertView.findViewById(R.id.nameTextView);
-            nameTextView.setText(item.getName());
+            nameTextView.setText(file.getName());
 
             TextView dimensionsTextView = convertView.findViewById(R.id.dimensionsTextView);
-            dimensionsTextView.setText(jpegTransformer.getWidth() + " x " + jpegTransformer.getHeight());
+            dimensionsTextView.setText(jpeg.getWidth() + " x " + jpeg.getHeight());
 
             TextView sizeTextView = convertView.findViewById(R.id.sizeTextView);
 
-            long numBytes = bytes.length;
+            long numBytes = jpeg.getJpegSize();
             if (numBytes < 1024) {
                 sizeTextView.setText(numBytes + " Bytes");
             } else if (numBytes < (1024 * 1000)) {

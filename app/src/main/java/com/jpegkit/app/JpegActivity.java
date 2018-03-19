@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -19,22 +17,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jpegkit.JpegTransformer;
+import com.jpegkit.JpegFile;
+import com.jpegkit.JpegImageView;
 
 import java.util.Set;
 import java.util.TreeSet;
 
 public class JpegActivity extends AppCompatActivity {
 
-    private ImageView mImageView;
+    private JpegImageView mImageView;
 
     private String mName;
-    private byte[] mJpeg;
+    private byte[] mJpegBytes;
+
+    private JpegFile mJpeg;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,16 +44,16 @@ public class JpegActivity extends AppCompatActivity {
         mImageView = findViewById(R.id.imageView);
 
         mName = getIntent().getStringExtra("name");
-        mJpeg = getIntent().getByteArrayExtra("jpeg");
-
-        if (mName == null || mJpeg == null) {
-            finish();
-            return;
-        }
+        mJpeg = getIntent().getParcelableExtra("jpeg");
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(mName);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        if (mJpeg == null) {
+            finish();
+            return;
         }
 
         invalidateJpeg();
@@ -112,7 +112,7 @@ public class JpegActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.action_save) {
             Intent data = new Intent();
             data.putExtra("name", mName);
-            data.putExtra("jpeg", mJpeg);
+            data.putExtra("jpeg", mJpegBytes);
             setResult(RESULT_OK, data);
             finish();
             return true;
@@ -153,17 +153,16 @@ public class JpegActivity extends AppCompatActivity {
     }
 
     private void invalidateJpeg() {
-        Bitmap bitmap = BitmapFactory.decodeByteArray(mJpeg, 0, mJpeg.length);
-        mImageView.setImageBitmap(bitmap);
+        mJpegBytes = mJpeg.getJpegBytes();
 
-        JpegTransformer jpegTransformer = new JpegTransformer(mJpeg);
+        mImageView.setJpeg(mJpeg);
 
         TextView dimensionsTextView = findViewById(R.id.dimensionsTextView);
-        dimensionsTextView.setText(jpegTransformer.getWidth() + " x " + jpegTransformer.getHeight());
+        dimensionsTextView.setText(mJpeg.getWidth() + " x " + mJpeg.getHeight());
 
         TextView sizeTextView = findViewById(R.id.sizeTextView);
 
-        long numBytes = mJpeg.length;
+        long numBytes = mJpegBytes.length;
         if (numBytes < 1024) {
             sizeTextView.setText(numBytes + " Bytes");
         } else if (numBytes < (1024 * 1000)) {
@@ -176,33 +175,21 @@ public class JpegActivity extends AppCompatActivity {
     }
 
     private void rotate(int degrees) {
-        JpegTransformer jpegTransformer = new JpegTransformer(mJpeg);
-        jpegTransformer.rotate(degrees);
-
-        mJpeg = jpegTransformer.getJpeg();
+        mJpeg.rotate(90);
         invalidateJpeg();
     }
 
     private void flipHorizontal() {
-        JpegTransformer jpegTransformer = new JpegTransformer(mJpeg);
-        jpegTransformer.flipHorizontal();
-
-        mJpeg = jpegTransformer.getJpeg();
-        invalidateJpeg();
+        mJpeg.flipHorizontal();
     }
 
     private void flipVertical() {
-        JpegTransformer jpegTransformer = new JpegTransformer(mJpeg);
-        jpegTransformer.flipVertical();
-
-        mJpeg = jpegTransformer.getJpeg();
-        invalidateJpeg();
+        mJpeg.flipVertical();
     }
 
     private void crop() {
-        final JpegTransformer jpegTransformer = new JpegTransformer(mJpeg);
-        final int width = jpegTransformer.getWidth();
-        final int height = jpegTransformer.getHeight();
+        final int width = mJpeg.getWidth();
+        final int height = mJpeg.getHeight();
 
         LinearLayout view = new LinearLayout(this);
         view.setOrientation(LinearLayout.VERTICAL);
@@ -256,9 +243,7 @@ public class JpegActivity extends AppCompatActivity {
                                 return;
                             }
 
-                            jpegTransformer.crop(new Rect(left, top, right, bottom));
-                            mJpeg = jpegTransformer.getJpeg();
-                            invalidateJpeg();
+                            mJpeg.crop(new Rect(left, top, right, bottom));
                         } catch (Exception e) {
                             Toast.makeText(JpegActivity.this, "Enter values into all fields.", Toast.LENGTH_SHORT).show();
                             return;

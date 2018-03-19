@@ -2,6 +2,6 @@
     <string name="app_name">JpegKit</string>
 
     <string name="about_dialog_title">About</string>
-    <string name="about_dialog_message">JpegKit is open source software distributed under the MIT license.\n\nFor more details visit www.camerakit.website/.</string>
+    <string name="about_dialog_message">JpegKit is open source software distributed under the MIT license.\n\nFor more details visit:\n<b>www.camerakit.website/jpegkit</b></string>
 
 </resources>
