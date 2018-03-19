@@ -154,7 +154,6 @@ public class JpegActivity extends AppCompatActivity {
 
     private void invalidateJpeg() {
         mJpegBytes = mJpeg.getJpegBytes();
-
         mImageView.setJpeg(mJpeg);
 
         TextView dimensionsTextView = findViewById(R.id.dimensionsTextView);
@@ -181,10 +180,12 @@ public class JpegActivity extends AppCompatActivity {
 
     private void flipHorizontal() {
         mJpeg.flipHorizontal();
+        invalidateJpeg();
     }
 
     private void flipVertical() {
         mJpeg.flipVertical();
+        invalidateJpeg();
     }
 
     private void crop() {
@@ -244,6 +245,7 @@ public class JpegActivity extends AppCompatActivity {
                             }
 
                             mJpeg.crop(new Rect(left, top, right, bottom));
+                            invalidateJpeg();
                         } catch (Exception e) {
                             Toast.makeText(JpegActivity.this, "Enter values into all fields.", Toast.LENGTH_SHORT).show();
                             return;
