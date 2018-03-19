@@ -175,7 +175,7 @@ public class JpegActivity extends AppCompatActivity {
     }
 
     private void rotate(int degrees) {
-        mJpeg.rotate(90);
+        mJpeg.rotate(degrees);
         invalidateJpeg();
     }
 
