@@ -70,7 +70,12 @@ public class JpegImageView extends ImageView {
     }
 
     public void setJpeg(Jpeg jpeg) {
+        setImageBitmap(null);
+
         mJpeg = jpeg;
+        mInSampleSize = 1;
+        mBitmap = null;
+
         adjustSize(getWidth(), getHeight());
     }
 
