@@ -56,3 +56,13 @@ freeline/
 freeline_project_description.json
 
 .DS_Store
+
+# Project files
+app/.classpath
+app/.project
+app/.settings/
+.project
+.settings/*
+jpegkit/.classpath
+jpegkit/.project
+jpegkit/.settings/
