@@ -1,26 +1,35 @@
 plugins {
+    id 'com.android.library'
     id 'com.jfrog.bintray' version '1.7.3'
     id 'com.github.dcendents.android-maven' version '1.5'
 }
 
-apply plugin: 'com.android.library'
-
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion = 27
+    buildToolsVersion = '27.0.3'
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        minSdkVersion 15
+        targetSdkVersion 27
+        externalNativeBuild {
+            cmake {
+                cppFlags ''
+            }
+        }
     }
     externalNativeBuild {
         cmake {
-            path 'src/main/CMakeLists.txt'
+            path 'CMakeLists.txt'
         }
     }
 }
 
+repositories {
+    jcenter()
+    google()
+}
+
 dependencies {
-    implementation 'com.android.support:exifinterface:27.1.0'
+    implementation 'com.android.support:exifinterface:27.1.1'
 }
 
 ext.getBintrayUser = { ->
@@ -30,7 +39,7 @@ ext.getBintrayUser = { ->
 
     Properties properties = new Properties()
     properties.load(rootProject.file('local.properties').newDataInputStream())
-    return properties.getProperty('bintray.user');
+    return properties.getProperty('bintray.user')
 }
 
 ext.getBintrayKey = { ->
@@ -100,7 +109,7 @@ task deployRelease {
 }
 
 group = 'com.camerakit'
-version = '0.1.0'
+version = '0.2.0'
 
 install {
     repositories.mavenInstaller {
