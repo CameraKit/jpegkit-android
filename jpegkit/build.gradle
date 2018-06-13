@@ -1,15 +1,16 @@
 plugins {
     id 'com.android.library'
+    id 'kotlin-android'
     id 'com.jfrog.bintray' version '1.7.3'
     id 'com.github.dcendents.android-maven' version '1.5'
 }
 
 android {
-    compileSdkVersion = 27
-    buildToolsVersion = '27.0.3'
+    compileSdkVersion = 28
+    buildToolsVersion = '28.0.0'
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 27
+        targetSdkVersion 28
         externalNativeBuild {
             cmake {
                 cppFlags ''
@@ -29,7 +30,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.android.support:exifinterface:27.1.1'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.41'
+    implementation 'com.android.support:exifinterface:28.0.0-alpha3'
 }
 
 ext.getBintrayUser = { ->
