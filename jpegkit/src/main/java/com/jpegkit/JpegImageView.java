@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
+@Deprecated
 public class JpegImageView extends ImageView {
 
     private Jpeg mJpeg;

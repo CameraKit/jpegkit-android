@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+@Deprecated
 public final class JpegKit {
 
     private static void writeFile(Jpeg jpeg, File file) throws IOException {
