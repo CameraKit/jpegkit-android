@@ -1,4 +1,4 @@
-package com.jpegkit;
+package jpegkit;
 
 import android.graphics.Rect;
 import android.os.Parcel;

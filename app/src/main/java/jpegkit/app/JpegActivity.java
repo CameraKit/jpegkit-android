@@ -1,4 +1,4 @@
-package com.jpegkit.app;
+package jpegkit.app;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,8 +21,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jpegkit.JpegFile;
-import com.jpegkit.JpegImageView;
+import jpegkit.JpegFile;
+import jpegkit.JpegImageView;
 
 import java.util.Set;
 import java.util.TreeSet;

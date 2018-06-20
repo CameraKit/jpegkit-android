@@ -1,4 +1,4 @@
-package com.jpegkit;
+package jpegkit;
 
 public class JpegKitException extends Exception {
 

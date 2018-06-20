@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <com.jpegkit.JpegImageView
+        <jpegkit.JpegImageView
             android:id="@+id/imageView"
             android:layout_width="80dp"
             android:layout_height="80dp"

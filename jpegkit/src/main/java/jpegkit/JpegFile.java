@@ -1,4 +1,4 @@
-package com.jpegkit;
+package jpegkit;
 
 import android.os.Parcel;
 import android.os.Parcelable;

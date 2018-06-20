@@ -1,4 +1,4 @@
-package com.jpegkit;
+package jpegkit;
 
 import android.annotation.TargetApi;
 import android.content.Context;

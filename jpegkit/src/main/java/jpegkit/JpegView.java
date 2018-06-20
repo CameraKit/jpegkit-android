@@ -1,4 +1,4 @@
-package com.jpegkit;
+package jpegkit;
 
 import android.content.Context;
 import android.util.AttributeSet;

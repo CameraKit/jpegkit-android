@@ -1,4 +1,4 @@
-package com.jpegkit;
+package jpegkit;
 
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
