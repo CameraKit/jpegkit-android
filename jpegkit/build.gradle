@@ -111,7 +111,7 @@ task deployRelease {
 }
 
 group = 'com.camerakit'
-version = '0.2.0-alpha1'
+version = '0.2.0'
 
 install {
     repositories.mavenInstaller {
