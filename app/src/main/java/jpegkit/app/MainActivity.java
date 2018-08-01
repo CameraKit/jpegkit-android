@@ -1,4 +1,4 @@
-package com.jpegkit.app;
+package jpegkit.app;
 
 import android.Manifest;
 import android.content.Intent;
@@ -23,9 +23,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jpegkit.Jpeg;
-import com.jpegkit.JpegFile;
-import com.jpegkit.JpegImageView;
+import jpegkit.Jpeg;
+import jpegkit.JpegFile;
+import jpegkit.JpegImageView;
 
 import java.io.File;
 import java.io.FileOutputStream;

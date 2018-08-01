@@ -1,4 +1,4 @@
-package com.jpegkit;
+package jpegkit;
 
 import android.graphics.Rect;
 import android.os.Parcel;
@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 
 import java.nio.ByteBuffer;
 
+@Deprecated
 public class Jpeg implements Parcelable {
 
     private static final Object sJniLock = new Object();

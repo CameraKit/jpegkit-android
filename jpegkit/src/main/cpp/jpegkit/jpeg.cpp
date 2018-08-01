@@ -7,43 +7,43 @@
 extern "C"
 {
 JNIEXPORT jobject JNICALL
-Java_com_jpegkit_Jpeg_jniMount
+Java_jpegkit_Jpeg_jniMount
         (JNIEnv *env, jobject obj, jbyteArray jpegBytes);
 
 JNIEXPORT void JNICALL
-Java_com_jpegkit_Jpeg_jniRelease
+Java_jpegkit_Jpeg_jniRelease
         (JNIEnv *env, jobject obj, jobject handle);
 
 JNIEXPORT jbyteArray JNICALL
-Java_com_jpegkit_Jpeg_jniGetJpegBytes
+Java_jpegkit_Jpeg_jniGetJpegBytes
         (JNIEnv *env, jobject obj, jobject handle);
 
 JNIEXPORT jlong JNICALL
-Java_com_jpegkit_Jpeg_jniGetJpegSize
+Java_jpegkit_Jpeg_jniGetJpegSize
         (JNIEnv *env, jobject obj, jobject handle);
 
 JNIEXPORT jint JNICALL
-Java_com_jpegkit_Jpeg_jniGetWidth
+Java_jpegkit_Jpeg_jniGetWidth
         (JNIEnv *env, jobject obj, jobject handle);
 
 JNIEXPORT jint JNICALL
-Java_com_jpegkit_Jpeg_jniGetHeight
+Java_jpegkit_Jpeg_jniGetHeight
         (JNIEnv *env, jobject obj, jobject handle);
 
 JNIEXPORT void JNICALL
-Java_com_jpegkit_Jpeg_jniRotate
+Java_jpegkit_Jpeg_jniRotate
         (JNIEnv *env, jobject obj, jobject handle, jint degrees);
 
 JNIEXPORT void JNICALL
-Java_com_jpegkit_Jpeg_jniFlipHorizontal
+Java_jpegkit_Jpeg_jniFlipHorizontal
         (JNIEnv *env, jobject obj, jobject handle);
 
 JNIEXPORT void JNICALL
-Java_com_jpegkit_Jpeg_jniFlipVertical
+Java_jpegkit_Jpeg_jniFlipVertical
         (JNIEnv *env, jobject obj, jobject handle);
 
 JNIEXPORT void JNICALL
-Java_com_jpegkit_Jpeg_jniCrop
+Java_jpegkit_Jpeg_jniCrop
         (JNIEnv *env, jobject obj, jobject handle, jint left, jint top, jint right, jint bottom);
 }
 
@@ -65,7 +65,7 @@ public:
 };
 
 JNIEXPORT jobject JNICALL
-Java_com_jpegkit_Jpeg_jniMount
+Java_jpegkit_Jpeg_jniMount
         (JNIEnv *env, jobject obj, jbyteArray jpegBytes) {
     int jpegSize = env->GetArrayLength(jpegBytes);
 
@@ -84,7 +84,7 @@ Java_com_jpegkit_Jpeg_jniMount
 
 
 JNIEXPORT void JNICALL
-Java_com_jpegkit_Jpeg_jniRelease
+Java_jpegkit_Jpeg_jniRelease
         (JNIEnv *env, jobject obj, jobject handle) {
     Jpeg *jpeg = (Jpeg *) env->GetDirectBufferAddress(handle);
 
@@ -100,7 +100,7 @@ Java_com_jpegkit_Jpeg_jniRelease
 }
 
 JNIEXPORT jbyteArray JNICALL
-Java_com_jpegkit_Jpeg_jniGetJpegBytes
+Java_jpegkit_Jpeg_jniGetJpegBytes
         (JNIEnv *env, jobject obj, jobject handle) {
     Jpeg *jpeg = (Jpeg *) env->GetDirectBufferAddress(handle);
 
@@ -110,14 +110,14 @@ Java_com_jpegkit_Jpeg_jniGetJpegBytes
 }
 
 JNIEXPORT jlong JNICALL
-Java_com_jpegkit_Jpeg_jniGetJpegSize
+Java_jpegkit_Jpeg_jniGetJpegSize
         (JNIEnv *env, jobject obj, jobject handle) {
     Jpeg *jpeg = (Jpeg *) env->GetDirectBufferAddress(handle);
     return jpeg->size;
 }
 
 JNIEXPORT jint JNICALL
-Java_com_jpegkit_Jpeg_jniGetWidth
+Java_jpegkit_Jpeg_jniGetWidth
         (JNIEnv *env, jobject obj, jobject handle) {
     Jpeg *jpeg = (Jpeg *) env->GetDirectBufferAddress(handle);
 
@@ -132,7 +132,7 @@ Java_com_jpegkit_Jpeg_jniGetWidth
 }
 
 JNIEXPORT jint JNICALL
-Java_com_jpegkit_Jpeg_jniGetHeight
+Java_jpegkit_Jpeg_jniGetHeight
         (JNIEnv *env, jobject obj, jobject handle) {
     Jpeg *jpeg = (Jpeg *) env->GetDirectBufferAddress(handle);
 
@@ -147,7 +147,7 @@ Java_com_jpegkit_Jpeg_jniGetHeight
 }
 
 JNIEXPORT void JNICALL
-Java_com_jpegkit_Jpeg_jniRotate
+Java_jpegkit_Jpeg_jniRotate
         (JNIEnv *env, jobject obj, jobject handle, jint degrees) {
     Jpeg *jpeg = (Jpeg *) env->GetDirectBufferAddress(handle);
 
@@ -164,7 +164,7 @@ Java_com_jpegkit_Jpeg_jniRotate
 }
 
 JNIEXPORT void JNICALL
-Java_com_jpegkit_Jpeg_jniFlipHorizontal
+Java_jpegkit_Jpeg_jniFlipHorizontal
         (JNIEnv *env, jobject obj, jobject handle) {
     Jpeg *jpeg = (Jpeg *) env->GetDirectBufferAddress(handle);
 
@@ -175,7 +175,7 @@ Java_com_jpegkit_Jpeg_jniFlipHorizontal
 }
 
 JNIEXPORT void JNICALL
-Java_com_jpegkit_Jpeg_jniFlipVertical
+Java_jpegkit_Jpeg_jniFlipVertical
         (JNIEnv *env, jobject obj, jobject handle) {
     Jpeg *jpeg = (Jpeg *) env->GetDirectBufferAddress(handle);
 
@@ -186,7 +186,7 @@ Java_com_jpegkit_Jpeg_jniFlipVertical
 }
 
 JNIEXPORT void JNICALL
-Java_com_jpegkit_Jpeg_jniCrop
+Java_jpegkit_Jpeg_jniCrop
         (JNIEnv *env, jobject obj, jobject handle, jint left, jint top, jint width, jint height) {
     Jpeg *jpeg = (Jpeg *) env->GetDirectBufferAddress(handle);
 

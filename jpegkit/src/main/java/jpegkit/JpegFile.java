@@ -1,4 +1,4 @@
-package com.jpegkit;
+package jpegkit;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+@Deprecated
 public class JpegFile extends Jpeg {
 
     private File mJpegFile;
@@ -39,7 +40,6 @@ public class JpegFile extends Jpeg {
         byte[] fileBytes = new byte[inputStream.available()];
         inputStream.read(fileBytes);
         inputStream.close();
-
         return fileBytes;
     }
 
