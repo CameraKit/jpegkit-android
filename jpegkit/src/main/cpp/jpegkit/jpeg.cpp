@@ -160,6 +160,8 @@ Java_jpegkit_Jpeg_jniRotate
         transform->op = TJXOP_ROT270;
     }
 
+    transform->options = TJXOPT_TRIM;
+
     tjTransform(jpeg->transformer, jpeg->buffer, jpeg->size, 1, &jpeg->buffer, &jpeg->size, transform, 0);
 }
 
