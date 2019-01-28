@@ -31,7 +31,7 @@ This is all done without decoding the JPEG to RGB. All operations on the JPEG ar
 Add __JpegKit__ to the dependencies block in your `app` level `build.gradle`:
 
 ```groovy		
-compile 'com.camerakit:jpegkit:0.2.0'
+compile 'com.camerakit:jpegkit:0.2.1'
 ```
 
 ## Usage

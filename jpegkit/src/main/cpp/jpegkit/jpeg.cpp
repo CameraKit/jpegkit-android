@@ -160,6 +160,8 @@ Java_jpegkit_Jpeg_jniRotate
         transform->op = TJXOP_ROT270;
     }
 
+    transform->options = TJXOPT_TRIM;
+
     tjTransform(jpeg->transformer, jpeg->buffer, jpeg->size, 1, &jpeg->buffer, &jpeg->size, transform, 0);
 }
 
@@ -170,6 +172,7 @@ Java_jpegkit_Jpeg_jniFlipHorizontal
 
     tjtransform *transform = new tjtransform();
     transform->op = TJXOP_HFLIP;
+    transform->options = TJXOPT_TRIM;
 
     tjTransform(jpeg->transformer, jpeg->buffer, jpeg->size, 1, &jpeg->buffer, &jpeg->size, transform, 0);
 }
@@ -181,6 +184,7 @@ Java_jpegkit_Jpeg_jniFlipVertical
 
     tjtransform *transform = new tjtransform();
     transform->op = TJXOP_VFLIP;
+    transform->options = TJXOPT_TRIM;
 
     tjTransform(jpeg->transformer, jpeg->buffer, jpeg->size, 1, &jpeg->buffer, &jpeg->size, transform, 0);
 }

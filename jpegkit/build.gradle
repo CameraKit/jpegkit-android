@@ -7,7 +7,7 @@ plugins {
 
 android {
     compileSdkVersion = 28
-    buildToolsVersion = '28.0.0'
+    buildToolsVersion = '28.0.3'
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 28
@@ -85,9 +85,9 @@ task deploySnapshot {
     finalizedBy bintrayUpload
 
     doLast {
-        bintrayUpload.setVersionName(bintrayUpload.getVersionName() + '-Snapshot')
+        bintrayUpload.setVersionName(bintrayUpload.getVersionName())
         bintrayUpload.setUserOrg('camerakit')
-        bintrayUpload.setRepoName('jpegkit-android-snapshots')
+        bintrayUpload.setRepoName('jpegkit-android')
         bintrayUpload.setOverride(true)
         bintrayUpload.setPublish(true)
 
@@ -111,7 +111,7 @@ task deployRelease {
 }
 
 group = 'com.camerakit'
-version = '0.2.0'
+version = '0.2.1'
 
 install {
     repositories.mavenInstaller {
