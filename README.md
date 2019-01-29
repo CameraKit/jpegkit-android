@@ -27,49 +27,81 @@ JpegKit bridges the libjpeg-turbo C++ library into android and wraps it with an 
 
 This is all done without decoding the JPEG to RGB. All operations on the JPEG are done in C++ space and does not touch the Java memory, allowing you to work with extremely large JPEGs without the risk of an `OutOfMemoryException`.
 
+## The State Of The Union
+We've been working on a major update to the JpegKit project that we will dub `v0.3.0`. This release separates concerns away from the single Jpeg class to several classes, each handling different functions of JpegKit. 
+
+In a previous release we deprecated the Jpeg class with the intention of having the new functionality ready for the spotlight. 
+
+However we discovered some bugs and issues after the initial release. Until `v0.3.0` is finalized, we've un-deprecated that Jpeg class and its other supporting classes. Below is the intended Setup and Usage for `v0.2.2`. 
+
 ## Setup
 Add __JpegKit__ to the dependencies block in your `app` level `build.gradle`:
 
 ```groovy		
-compile 'com.camerakit:jpegkit:0.2.1'
+compile 'com.camerakit:jpegkit:0.2.2'
 ```
 
 ## Usage
 
-JpegKit currently expects a JPEG parameter in the form of a `byte[]`. In the future you'll be able to just pass a file.
+The core of JpegKit is the Jpeg class. When creating an object of type `Jpeg`, the constructor expects a `byte[]`. In the future you'll be able to pass just a file.
 
-First, create a `JpegTransformer`:
+### Constructor
+First, create a `Jpeg`:
 
 ```java
-byte[] jpeg = ...;
-JpegTransformer jpegTransformer = new JpegTransformer(jpeg);
+import jpegkit.Jpeg;
+
+//...
+
+byte[] jpegBytes = ...;
+Jpeg mJpeg = new Jpeg(jpegBytes);
 ```
 
+One can then transform this Jpeg object with the transformations listed in the **Transformations** section below.
+
+
+### Jpeg result
 After you perform your transformations, you can get a new JPEG `byte[]` back:
 
 ```java
-byte[] newJpeg = jpegTransformer.getJpeg();
+byte[] newJpegBytes = mJpeg.getJpeg();
 ```
 
 The `getJpeg()` call can only be used once. At this point our C++ libjpeg-turbo wrapper encodes the new JPEG and also disposes of the original and clears any other memory it used.
 
 Transformations are performed in C++ right when you make the method call, as opposed to doing all after you finish with `getJpeg()`. The transformations will be applied in the order you make the method calls.
 
-### MetaData
+## JpegImageView
 
-You can currently retrieve a JPEGs width and height. This only decodes the JPEGs header information and is very fast.
+`JpegImageView` is a view to display JpegKit's `Jpeg` objects.
 
-```java
-int width = jpegTransformer.getWidth();
-int height = jpegTransformer.getHeight();
+Create a `JpegImageView` in **xml** as follows.
+
+```xml
+<jpegkit.JpegImageView
+    android:id="@+id/jpegView"
+    android:layout_width="200dp"
+    android:layout_height="200dp" />
 ```
 
+Access and set the JPEG from your Activity as follows.
+
+```java
+import jpegkit.JpegImageView;
+
+//...
+
+JpegImageView jpegView = findViewById(R.id.jpegView)
+jpegView.setJpeg(mJpeg);
+```
+
+## Transformations
 ### Rotate
 
 Acceptable parameters are `90`, `180`, or `270`.
 
 ```java
-jpegTransformer.rotate(90);
+mJpeg.rotate(int rotation);
 ```
 
 ### Flip Horizontal or Vertical
@@ -77,13 +109,13 @@ jpegTransformer.rotate(90);
 Flip horizontal:
 
 ```java
-jpegTransformer.flipHorizontal();
+mJpeg.flipHorizontal();
 ```
 
 Flip horizontal:
 
 ```java
-jpegTransformer.flipVertical();
+mJpeg.flipVertical();
 ```
 
 ### Crop
@@ -92,9 +124,19 @@ Crop extends an `android.graphics.Rect`.
 
 ```java
 Rect cropRect = new Rect(left, top, right, bottom);
-jpegTransformer.crop(cropRect);
+mJpeg.crop(cropRect);
 ```
 
+
+## MetaData
+
+You can retrieve a JPEGs width, height and size. This only decodes the JPEGs header information and is very fast.
+
+```java
+int width = mJpeg.getWidth();
+int height = mJpeg.getHeight();
+long size = mJpeg.getJpegSize();
+```
 ---
 
 ## License

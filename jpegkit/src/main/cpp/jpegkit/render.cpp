@@ -6,7 +6,7 @@
 #include <android/native_window_jni.h>
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_jpegkit_JpegView_renderJpeg(JNIEnv *env, jobject obj, jobject surface, jlong allocHandle, jlong jpegSize, jint width, jint height) {
+Java_jpegkit_JpegView_renderJpeg(JNIEnv *env, jobject obj, jobject surface, jlong allocHandle, jlong jpegSize, jint width, jint height) {
     ANativeWindow *window = ANativeWindow_fromSurface(env, surface);
     ANativeWindow_setBuffersGeometry(window, width, height, WINDOW_FORMAT_RGBA_8888);
     ANativeWindow_Buffer windowBuffer;

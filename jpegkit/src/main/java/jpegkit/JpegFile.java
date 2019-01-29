@@ -9,7 +9,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-@Deprecated
 public class JpegFile extends Jpeg {
 
     private File mJpegFile;
