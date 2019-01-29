@@ -49,6 +49,10 @@ The core of JpegKit is the Jpeg class. When creating an object of type `Jpeg`, t
 First, create a `Jpeg`:
 
 ```java
+import jpegkit.Jpeg;
+
+//...
+
 byte[] jpegBytes = ...;
 Jpeg mJpeg = new Jpeg(jpegBytes);
 ```
@@ -83,6 +87,10 @@ Create a `JpegImageView` in **xml** as follows.
 Access and set the JPEG from your Activity as follows.
 
 ```java
+import jpegkit.JpegImageView;
+
+//...
+
 JpegImageView jpegView = findViewById(R.id.jpegView)
 jpegView.setJpeg(mJpeg);
 ```
